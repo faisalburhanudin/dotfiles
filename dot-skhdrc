@@ -108,4 +108,4 @@
 cmd + shift - 1 :  open /Applications/Alacritty.app
 cmd + shift - 2 :  open "/Applications/Discord.app"
 cmd + shift - 3 :  open "/Applications/Google Chrome.app"
-
+cmd + shift - 4 :  goland
