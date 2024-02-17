@@ -5,3 +5,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/skhdrc" "$HOME/
 
 # alacritty
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+
+# nvim
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/nvim" "$HOME/.config/nvim"
