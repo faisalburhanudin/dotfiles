@@ -37,13 +37,16 @@ require("lazy").setup({
 		opts = {},
   -- stylua: ignore
   keys = {
-    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-  },
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
 	},
+
+	-- DAP
+	"mfussenegger/nvim-dap",
 
 	-- Automatically close tags
 	{
@@ -708,5 +711,39 @@ lspconfig.dartls.setup({
 		},
 	},
 })
+
+local dap = require("dap")
+
+dap.adapters.go = function(callback, config)
+	print(config.name)
+	local handle
+	local pid_or_err
+	local port = 38697
+	handle, pid_or_err = vim.loop.spawn("dlv", {
+		args = { "dap", "-l", "127.0.0.1:" .. port },
+		detached = true,
+	}, function(code)
+		handle:close()
+		print("Delve exited with exit code: " .. code)
+	end)
+	-- Wait 100ms for delve to start
+	vim.defer_fn(function()
+		dap.repl.open()
+		callback({ type = "server", host = "127.0.0.1", port = port })
+	end, 100)
+end
+
+dap.configurations.go = {
+	{ type = "go", name = "Debug", request = "launch", program = "${file}" },
+	{
+		type = "go",
+		name = "Debug test",
+		request = "launch",
+		mode = "test", -- Mode is important
+		program = "${file}",
+	},
+}
+
+dap.continue()
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
