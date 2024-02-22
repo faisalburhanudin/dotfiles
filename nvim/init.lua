@@ -21,6 +21,7 @@ require("lazy").setup({
 	"almo7aya/openingh.nvim",
 	"github/copilot.vim",
 	"stevearc/conform.nvim",
+	"folke/neodev.nvim",
 
 	-- Git related plugins
 	"tpope/vim-fugitive",
@@ -47,6 +48,7 @@ require("lazy").setup({
 
 	-- DAP
 	"mfussenegger/nvim-dap",
+	"rcarriga/nvim-dap-ui",
 
 	-- Automatically close tags
 	{
@@ -278,6 +280,9 @@ vim.o.relativenumber = true
 -- no wrap
 vim.wo.wrap = false
 
+-- no swap file
+vim.o.swapfile = false
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -359,7 +364,7 @@ vim.api.nvim_create_user_command("LiveGrepGitRoot", live_grep_git_root, {})
 
 -- See `:help telescope.builtin`
 vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
--- vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
+vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>/", function()
 	-- You can pass additional configuration to telescope to change theme, layout, etc.
 	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -680,10 +685,11 @@ vim.api.nvim_set_keymap("n", "<leader>Y", '"+yg_', { noremap = true, silent = tr
 vim.api.nvim_set_keymap("n", "<leader>p", '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>P", '"+P', { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader><space>", require("telescope.builtin").commands, { desc = "[ ] Find existing buffers" })
-
 -- jk to escape
 vim.api.nvim_set_keymap("i", "jk", "<esc>", { noremap = true, silent = true })
+
+-- wk to save and quit
+vim.api.nvim_set_keymap("n", "<leader>wk", ":wq<CR>", { noremap = true, silent = true })
 
 -- \ to split vertically
 vim.api.nvim_set_keymap("n", "<leader>\\", ":vsplit<CR>", { noremap = true, silent = true })
@@ -718,7 +724,6 @@ lspconfig.dartls.setup({
 local dap = require("dap")
 
 dap.adapters.go = function(callback, config)
-	print(config.name)
 	local handle
 	local pid_or_err
 	local port = 38697
@@ -748,5 +753,27 @@ dap.configurations.go = {
 }
 
 dap.continue()
+
+require("neodev").setup({
+	library = { plugins = { "nvim-dap-ui" }, types = true },
+})
+
+require("dapui").setup()
+vim.keymap.set("n", "<leader>dd", require("dapui").toggle, { desc = "[D]ebugger [D]isplay" })
+
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.before.attach.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+	dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+	dapui.close()
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
