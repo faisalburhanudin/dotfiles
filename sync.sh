@@ -8,3 +8,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/alacritty.yml" 
 
 # nvim
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/nvim" "$HOME/.config/nvim"
+
+# tmux
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/tmux.conf" "$HOME/.tmux.conf"
