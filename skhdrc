@@ -110,11 +110,12 @@ cmd + shift - 2 : open "/Applications/Discord.app"
 cmd + shift - 3 : open "/Applications/Google Chrome.app"
 cmd + shift - 4 : goland
 cmd + shift - 5 : open "/Applications/Pritunl.app"
+cmd + shift - 6 : open "/Applications/Todoist.app/"
 
 cmd - n [
 		"Alacritty" : tmux display-popup -E 'new-session'
 ]
 
-cmd - s [
+cmd - space [
 		"Alacritty" : tmux display-popup -E 'switch-session'
 ]
