@@ -1,0 +1,39 @@
+[user]
+    name = faisalburhanudin
+    email = faisalburhanudin@gmail.com
+
+[core]
+    excludesfile = /Users/faisal/.gitignore
+	pager = delta
+
+[init]
+    defaultBranch = master
+
+[url "git@gitlab.com:"]
+    insteadOf = https://gitlab.com/
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[includeIf "gitdir:/Users/faisal/workspace/src/gitlab.com/ruangguru/"]
+    path = /Users/faisal/.gitconfig-ruangguru
+[pull]
+	ff = only
+
+[includeIf "gitdir:/Users/faisal/workspace/src/github.com/ruang-guru/"]
+    path = /Users/faisal/.gitconfig-ruangguru
+[pull]
+	ff = only
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

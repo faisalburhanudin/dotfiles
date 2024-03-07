@@ -11,3 +11,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/nvim" "$HOME/.c
 
 # tmux
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/tmux.conf" "$HOME/.tmux.conf"
+
+# gitconfig
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/gitconfig" "$HOME/.gitconfig"
