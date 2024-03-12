@@ -34,7 +34,6 @@ require("lazy").setup({
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
-		---@type Flash.Config
 		opts = {},
   -- stylua: ignore
   keys = {
@@ -699,6 +698,9 @@ vim.api.nvim_set_keymap("n", "<leader>-", ":split<CR>", { noremap = true, silent
 
 -- disable pair
 vim.keymap.set("n", "<leader>dp", require("nvim-autopairs").disable, { desc = "Disable [P]air" })
+
+-- find and Replace
+vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = true, silent = true })
 
 function ExecuteCurrentFile()
 	--  get the current filetype

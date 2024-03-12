@@ -116,6 +116,6 @@ cmd - n [
 		"Alacritty" : tmux display-popup -E 'new-session'
 ]
 
-cmd - space [
+cmd - s [
 		"Alacritty" : tmux display-popup -E 'switch-session'
 ]
