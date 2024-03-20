@@ -22,6 +22,7 @@ require("lazy").setup({
 	"github/copilot.vim",
 	"stevearc/conform.nvim",
 	"folke/neodev.nvim",
+	"folke/zen-mode.nvim",
 
 	-- Git related plugins
 	"tpope/vim-fugitive",
@@ -756,57 +757,40 @@ lspconfig.dartls.setup({
 
 local dap = require("dap")
 
-dap.adapters.go = function(callback, config)
-	local handle
-	local pid_or_err
-	local port = 38697
-	handle, pid_or_err = vim.loop.spawn("dlv", {
-		args = { "dap", "-l", "127.0.0.1:" .. port },
-		detached = true,
-	}, function(code)
-		handle:close()
-		print("Delve exited with exit code: " .. code)
-	end)
-	-- Wait 100ms for delve to start
-	vim.defer_fn(function()
-		dap.repl.open()
-		callback({ type = "server", host = "127.0.0.1", port = port })
-	end, 100)
-end
+dap.adapters.delve = {
+	type = "server",
+	port = "${port}",
+	executable = {
+		command = "dlv",
+		args = { "dap", "-l", "127.0.0.1:${port}" },
+	},
+}
 
 dap.configurations.go = {
-	{ type = "go", name = "Debug", request = "launch", program = "${file}" },
 	{
-		type = "go",
-		name = "Debug test",
+		type = "delve",
+		name = "Debug",
 		request = "launch",
-		mode = "test", -- Mode is important
 		program = "${file}",
 	},
 }
 
-dap.continue()
+-- require("dapui").setup()
+-- vim.keymap.set("n", "<leader>dd", require("dapui").toggle, { desc = "[D]ebugger [D]isplay" })
 
-require("neodev").setup({
-	library = { plugins = { "nvim-dap-ui" }, types = true },
-})
-
-require("dapui").setup()
-vim.keymap.set("n", "<leader>dd", require("dapui").toggle, { desc = "[D]ebugger [D]isplay" })
-
-local dap, dapui = require("dap"), require("dapui")
-dap.listeners.before.attach.dapui_config = function()
-	dapui.open()
-end
-dap.listeners.before.launch.dapui_config = function()
-	dapui.open()
-end
-dap.listeners.before.event_terminated.dapui_config = function()
-	dapui.close()
-end
-dap.listeners.before.event_exited.dapui_config = function()
-	dapui.close()
-end
-
+-- local dap, dapui = require("dap"), require("dapui")
+-- dap.listeners.before.attach.dapui_config = function()
+-- 	dapui.open()
+-- end
+-- dap.listeners.before.launch.dapui_config = function()
+-- 	dapui.open()
+-- end
+-- dap.listeners.before.event_terminated.dapui_config = function()
+-- 	dapui.close()
+-- end
+-- dap.listeners.before.event_exited.dapui_config = function()
+-- 	dapui.close()
+-- end
+--
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
