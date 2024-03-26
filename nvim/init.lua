@@ -24,6 +24,7 @@ require("lazy").setup({
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
 	"leoluz/nvim-dap-go",
+	"petertriho/nvim-scrollbar",
 
 	-- Git related plugins
 	"tpope/vim-fugitive",
@@ -799,22 +800,5 @@ require("dap-go").setup({
 	},
 })
 
--- require("dapui").setup()
--- vim.keymap.set("n", "<leader>dd", require("dapui").toggle, { desc = "[D]ebugger [D]isplay" })
-
--- local dap, dapui = require("dap"), require("dapui")
--- dap.listeners.before.attach.dapui_config = function()
--- 	dapui.open()
--- end
--- dap.listeners.before.launch.dapui_config = function()
--- 	dapui.open()
--- end
--- dap.listeners.before.event_terminated.dapui_config = function()
--- 	dapui.close()
--- end
--- dap.listeners.before.event_exited.dapui_config = function()
--- 	dapui.close()
--- end
---
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+require("scrollbar").setup()
+require("scrollbar.handlers.gitsigns").setup()
