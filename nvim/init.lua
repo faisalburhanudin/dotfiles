@@ -23,8 +23,9 @@ require("lazy").setup({
 	"stevearc/conform.nvim",
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
-	"leoluz/nvim-dap-go",
 	"petertriho/nvim-scrollbar",
+	"nvim-telescope/telescope-ui-select.nvim",
+	"nvim-lua/plenary.nvim",
 
 	-- Git related plugins
 	"tpope/vim-fugitive",
@@ -38,14 +39,48 @@ require("lazy").setup({
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		opts = {},
-  -- stylua: ignore
-  keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
 	},
 
 	-- DAP
@@ -140,7 +175,7 @@ require("lazy").setup({
 					return "<Ignore>"
 				end, { expr = true, desc = "Jump to previous hunk" })
 
-				-- Actions
+				--
 				-- visual mode
 				map("v", "<leader>hs", function()
 					gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
@@ -708,6 +743,32 @@ vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = tru
 -- save
 vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
 
+-- [[ DAP Keymaps ]]
+
+-- DAP continue
+vim.api.nvim_set_keymap("n", "<leader>dc", ":lua require('dap').continue()<CR>", { noremap = true, silent = true })
+
+-- DAP toggle breakpoints
+vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dap').toggle_breakpoint()<CR>", {})
+
+-- [[ END: DAP Keymaps ]]
+
+-- disable copilot
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>cd<CR>",
+	":Copilot disable",
+	{ noremap = true, silent = true, desc = "[C]opilot [D]isable" }
+)
+
+-- enable copilot
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>ce<CR>",
+	":Copilot enable",
+	{ noremap = true, silent = true, desc = "[C]opilot [E]nable" }
+)
+
 function ExecuteCurrentFile()
 	--  get the current filetype
 	local filetype = vim.bo.filetype
@@ -760,45 +821,124 @@ lspconfig.dartls.setup({
 	},
 })
 
--- local dap = require("dap")
+local dap = require("dap")
 
-require("dap-go").setup({
-	-- Additional dap configurations can be added.
-	-- dap_configurations accepts a list of tables where each entry
-	-- represents a dap configuration. For more details do:
-	-- :help dap-configuration
-	dap_configurations = {
-		{
-			-- Must be "go" or it will be ignored by the plugin
-			type = "go",
-			name = "Attach remote",
-			mode = "remote",
-			request = "attach",
+dap.adapters.delve = {
+	type = "server",
+	port = "2345",
+	executable = {
+		command = "rogurun",
+		args = { "production.env", "debug" },
+	},
+}
+
+local job = require("plenary.job")
+
+function read_dotenv()
+	local dotenv = vim.fn.getcwd() .. "/production.env"
+	local env = {}
+	if vim.loop.fs_stat(dotenv) then
+		for line in io.lines(dotenv) do
+			local key, value = line:match("([^=]+)=(.*)")
+			env[key] = value
+		end
+	end
+	return env
+end
+
+dap.adapters.rogu = function(callback, _, _)
+	-- NOTE: plenary.job is based on libuv, it cleans the entire environmet if you set one value
+	-- so we need to copy the entire environment and set the value we need
+	local _env = vim.fn.environ()
+	_env["ROGU_ENV"] = "development"
+
+	-- read the .env files
+	local env = read_dotenv()
+	for key, value in pairs(env) do
+		_env[key] = value
+	end
+
+	job:new({
+		command = "dlv",
+		env = _env,
+		args = { "dap", "-l", "127.0.0.1:2345" },
+		on_exit = function(_, code, signal)
+			print("dlv exited with code", code, signal)
+		end,
+		on_stdout = function(_, data)
+			print("dlv stdout", data)
+		end,
+		on_stderr = function(_, data)
+			print("dlv stderr", data)
+		end,
+	}):start()
+
+	vim.defer_fn(function()
+		callback({ type = "server", port = "2345", host = "127.0.0.1" })
+	end, 500)
+end
+
+-- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+dap.configurations.go = {
+	{
+		type = "rogu",
+		name = "Debug",
+		request = "launch",
+		program = "${file}",
+	},
+}
+
+require("scrollbar").setup({
+	marks = {
+		Search = {
+			text = { "S", "S" },
+		},
+		Error = {
+			text = { "E", "E" },
+		},
+		Warn = {
+			text = { "W", "W" },
+		},
+		Info = {
+			text = { "I", "I" },
+		},
+		GitAdd = {
+			text = "+",
+		},
+		GitChange = {
+			text = "~",
+		},
+		GitDelete = {
+			text = "-",
 		},
 	},
-	-- delve configurations
-	delve = {
-		-- the path to the executable dlv which will be used for debugging.
-		-- by default, this is the "dlv" executable on your PATH.
-		path = "dlv",
-		-- time to wait for delve to initialize the debug session.
-		-- default to 20 seconds
-		initialize_timeout_sec = 20,
-		-- a string that defines the port to start delve debugger.
-		-- default to string "${port}" which instructs nvim-dap
-		-- to start the process in a random available port
-		port = "2345",
-		-- additional args to pass to dlv
-		args = {},
-		-- the build flags that are passed to delve.
-		-- defaults to empty string, but can be used to provide flags
-		-- such as "-tags=unit" to make sure the test suite is
-		-- compiled during debugging, for example.
-		-- passing build flags using args is ineffective, as those are
-		-- ignored by delve in dap mode.
-		build_flags = "",
+})
+require("scrollbar.handlers.gitsigns").setup()
+
+-- This is your opts table
+require("telescope").setup({
+	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({
+				-- even more opts
+			}),
+
+			-- pseudo code / specification for writing custom displays, like the one
+			-- for "codeactions"
+			-- specific_opts = {
+			--   [kind] = {
+			--     make_indexed = function(items) -> indexed_items, width,
+			--     make_displayer = function(widths) -> displayer
+			--     make_display = function(displayer) -> function(e)
+			--     make_ordinal = function(e) -> string
+			--   },
+			--   -- for example to disable the custom builtin "codeactions" display
+			--      do the following
+			--   codeactions = false,
+			-- }
+		},
 	},
 })
-
-require("scrollbar").setup()
-require("scrollbar.handlers.gitsigns").setup()
+-- To get ui-select loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require("telescope").load_extension("ui-select")
