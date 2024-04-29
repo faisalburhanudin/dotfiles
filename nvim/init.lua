@@ -834,7 +834,7 @@ dap.adapters.delve = {
 
 local job = require("plenary.job")
 
-function read_dotenv()
+local function read_dotenv()
 	local dotenv = vim.fn.getcwd() .. "/production.env"
 	local env = {}
 	if vim.loop.fs_stat(dotenv) then
