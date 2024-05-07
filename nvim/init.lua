@@ -835,12 +835,15 @@ dap.adapters.delve = {
 local job = require("plenary.job")
 
 local function read_dotenv()
+	-- TODO: choose env file
 	local dotenv = vim.fn.getcwd() .. "/production.env"
 	local env = {}
 	if vim.loop.fs_stat(dotenv) then
 		for line in io.lines(dotenv) do
 			local key, value = line:match("([^=]+)=(.*)")
-			env[key] = value
+			if key ~= nil then
+				env[key] = value
+			end
 		end
 	end
 	return env
@@ -850,7 +853,6 @@ dap.adapters.rogu = function(callback, _, _)
 	-- NOTE: plenary.job is based on libuv, it cleans the entire environmet if you set one value
 	-- so we need to copy the entire environment and set the value we need
 	local _env = vim.fn.environ()
-	_env["ROGU_ENV"] = "development"
 
 	-- read the .env files
 	local env = read_dotenv()
@@ -862,15 +864,20 @@ dap.adapters.rogu = function(callback, _, _)
 		command = "dlv",
 		env = _env,
 		args = { "dap", "-l", "127.0.0.1:2345" },
-		on_exit = function(_, code, signal)
-			print("dlv exited with code", code, signal)
+		on_exit = function(_, code)
+			if code ~= 0 then
+				print("dlv exited with code", code)
+			end
 		end,
-		on_stdout = function(_, data)
-			print("dlv stdout", data)
+		on_stdout = function(error, data)
+			assert(not error, error)
+			if data then
+				vim.schedule(function()
+					require("dap.repl").append(data)
+				end)
+			end
 		end,
-		on_stderr = function(_, data)
-			print("dlv stderr", data)
-		end,
+		on_stderr = function() end,
 	}):start()
 
 	vim.defer_fn(function()
