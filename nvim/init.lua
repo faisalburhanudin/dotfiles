@@ -751,6 +751,11 @@ vim.api.nvim_set_keymap("n", "<leader>dc", ":lua require('dap').continue()<CR>",
 -- DAP toggle breakpoints
 vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dap').toggle_breakpoint()<CR>", {})
 
+-- DAP step over
+vim.keymap.set("n", "<Leader>dr", function()
+	require("dap").repl.open()
+end)
+
 -- [[ END: DAP Keymaps ]]
 
 -- disable copilot
@@ -822,15 +827,6 @@ lspconfig.dartls.setup({
 })
 
 local dap = require("dap")
-
-dap.adapters.delve = {
-	type = "server",
-	port = "2345",
-	executable = {
-		command = "rogurun",
-		args = { "production.env", "debug" },
-	},
-}
 
 local job = require("plenary.job")
 
