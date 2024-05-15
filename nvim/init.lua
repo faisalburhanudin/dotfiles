@@ -855,6 +855,8 @@ dap.adapters.rogu = function(callback, config)
 		_env[key] = value
 	end
 
+	local repl = require("dap.repl")
+
 	job:new({
 		command = "dlv",
 		env = _env,
@@ -868,14 +870,14 @@ dap.adapters.rogu = function(callback, config)
 			assert(not error, error)
 			if data then
 				vim.schedule(function()
-					require("dap.repl").append(data)
+					repl.append(data)
 				end)
 			end
 		end,
 		on_stderr = function(_, data)
 			if data then
 				vim.schedule(function()
-					require("dap.repl").append(data)
+					repl.append(data)
 				end)
 			end
 		end,
