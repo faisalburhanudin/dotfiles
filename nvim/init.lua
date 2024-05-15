@@ -751,10 +751,8 @@ vim.api.nvim_set_keymap("n", "<leader>dc", ":lua require('dap').continue()<CR>",
 -- DAP toggle breakpoints
 vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dap').toggle_breakpoint()<CR>", {})
 
--- DAP step over
-vim.keymap.set("n", "<Leader>dr", function()
-	require("dap").repl.open()
-end)
+-- DAP toggle repl
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dap').repl.toggle()<CR>", {})
 
 -- [[ END: DAP Keymaps ]]
 
@@ -830,9 +828,9 @@ local dap = require("dap")
 
 local job = require("plenary.job")
 
-local function read_dotenv()
+local function read_dotenv(envfile)
 	-- TODO: choose env file
-	local dotenv = vim.fn.getcwd() .. "/production.env"
+	local dotenv = vim.fn.getcwd() .. "/" .. envfile
 	local env = {}
 	if vim.loop.fs_stat(dotenv) then
 		for line in io.lines(dotenv) do
@@ -845,13 +843,14 @@ local function read_dotenv()
 	return env
 end
 
-dap.adapters.rogu = function(callback, _, _)
+
+dap.adapters.rogu = function(callback, config)
 	-- NOTE: plenary.job is based on libuv, it cleans the entire environmet if you set one value
 	-- so we need to copy the entire environment and set the value we need
 	local _env = vim.fn.environ()
 
 	-- read the .env files
-	local env = read_dotenv()
+	local env = read_dotenv(config["envfile"])
 	for key, value in pairs(env) do
 		_env[key] = value
 	end
@@ -859,7 +858,7 @@ dap.adapters.rogu = function(callback, _, _)
 	job:new({
 		command = "dlv",
 		env = _env,
-		args = { "dap", "-l", "127.0.0.1:2345" },
+		args = { "dap", "-l", "127.0.0.1:" .. config["port"] },
 		on_exit = function(_, code)
 			if code ~= 0 then
 				print("dlv exited with code", code)
@@ -873,21 +872,30 @@ dap.adapters.rogu = function(callback, _, _)
 				end)
 			end
 		end,
-		on_stderr = function() end,
+		on_stderr = function(_, data)
+			if data then
+				vim.schedule(function()
+					require("dap.repl").append(data)
+				end)
+			end
+		end,
 	}):start()
 
 	vim.defer_fn(function()
-		callback({ type = "server", port = "2345", host = "127.0.0.1" })
-	end, 500)
+		callback({ type = "server", port = config["port"], host = "127.0.0.1" })
+	end, 1000)
 end
 
--- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
 dap.configurations.go = {
 	{
 		type = "rogu",
-		name = "Debug",
+		name = "Rogu: production.env",
 		request = "launch",
 		program = "${file}",
+		port = function()
+			return math.random(49152, 65535)
+		end,
+		envfile = "production.env",
 	},
 }
 
