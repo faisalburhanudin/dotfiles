@@ -18,9 +18,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure plugins ]]
 require("lazy").setup({
+	{
+		import = "custom.plugins",
+	},
 	"almo7aya/openingh.nvim",
-	"github/copilot.vim",
-	"stevearc/conform.nvim",
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
 	"petertriho/nvim-scrollbar",
@@ -842,7 +843,6 @@ local function read_dotenv(envfile)
 	end
 	return env
 end
-
 
 dap.adapters.rogu = function(callback, config)
 	-- NOTE: plenary.job is based on libuv, it cleans the entire environmet if you set one value
