@@ -21,68 +21,9 @@ require("lazy").setup({
 	{
 		import = "custom.plugins",
 	},
-	"almo7aya/openingh.nvim",
-	"folke/neodev.nvim",
-	"folke/zen-mode.nvim",
-	"petertriho/nvim-scrollbar",
-	"nvim-telescope/telescope-ui-select.nvim",
-	"nvim-lua/plenary.nvim",
-
-	-- Git related plugins
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
 
 	-- Detect tabstop and shiftwidth automatically
 	"tpope/vim-sleuth",
-
-	-- Fast search
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
-		keys = {
-			{
-				"s",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Flash",
-			},
-			{
-				"S",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
-			},
-		},
-	},
 
 	-- DAP
 	"mfussenegger/nvim-dap",
@@ -900,33 +841,6 @@ dap.configurations.go = {
 		envfile = "production.env",
 	},
 }
-
-require("scrollbar").setup({
-	marks = {
-		Search = {
-			text = { "S", "S" },
-		},
-		Error = {
-			text = { "E", "E" },
-		},
-		Warn = {
-			text = { "W", "W" },
-		},
-		Info = {
-			text = { "I", "I" },
-		},
-		GitAdd = {
-			text = "+",
-		},
-		GitChange = {
-			text = "~",
-		},
-		GitDelete = {
-			text = "-",
-		},
-	},
-})
-require("scrollbar.handlers.gitsigns").setup()
 
 -- This is your opts table
 require("telescope").setup({
