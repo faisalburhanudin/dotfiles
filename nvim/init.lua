@@ -58,18 +58,6 @@ cmp.setup({
 	},
 })
 
--- Ensure the servers above are installed
-
-mason_lspconfig.setup_handlers({
-	function(server_name)
-		require("lspconfig")[server_name].setup({
-			capabilities = capabilities,
-			settings = servers[server_name],
-			filetypes = (servers[server_name] or {}).filetypes,
-		})
-	end,
-})
-
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
