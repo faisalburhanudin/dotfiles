@@ -131,19 +131,6 @@ vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = tru
 -- save
 vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
 
--- [[ DAP Keymaps ]]
-
--- DAP continue
-vim.api.nvim_set_keymap("n", "<leader>dc", ":lua require('dap').continue()<CR>", { noremap = true, silent = true })
-
--- DAP toggle breakpoints
-vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dap').toggle_breakpoint()<CR>", {})
-
--- DAP toggle repl
-vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dap').repl.toggle()<CR>", {})
-
--- [[ END: DAP Keymaps ]]
-
 -- disable copilot
 vim.api.nvim_set_keymap(
 	"n",

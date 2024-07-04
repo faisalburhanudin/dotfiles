@@ -6,7 +6,7 @@ local set = vim.keymap.set
 dap_python.setup("/Users/faisal/.virtualenvs/debugpy/bin/python")
 
 local function save_and_run()
-	vim.cmd("w")
+	vim.cmd("wa")
 	dap.continue()
 end
 
