@@ -227,4 +227,6 @@ require("telescope").setup({
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("ui-select")
 
-require("flash").setup()
+-- search as you normally do, but enhanced with jump labels
+local flash = require("flash")
+flash.toggle()
