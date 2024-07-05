@@ -147,37 +147,6 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = "[C]opilot [E]nable" }
 )
 
-function ExecuteCurrentFile()
-	--  get the current filetype
-	local filetype = vim.bo.filetype
-
-	-- get current file path
-	local file = vim.fn.expand("%:p")
-
-	--  if the filetype is python
-	if filetype == "python" then
-		local venv = os.getenv("VIRTUAL_ENV")
-		if venv then
-			file = venv .. "/bin/python " .. file
-		else
-			file = "python3 " .. file
-		end
-
-		--  execute the current file
-		vim.cmd("w")
-
-		-- execute in term
-		vim.cmd("terminal " .. file)
-	end
-
-	if filetype == "sh" then
-		vim.cmd("w")
-		vim.cmd("terminal bash " .. file)
-	end
-end
-
-vim.keymap.set("n", "<leader>xf", ExecuteCurrentFile, { desc = "E[x]ecute [F]ile" })
-
 local util = require("lspconfig.util")
 
 lspconfig.dartls.setup({
