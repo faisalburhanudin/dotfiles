@@ -199,3 +199,6 @@ require("telescope").load_extension("ui-select")
 -- search as you normally do, but enhanced with jump labels
 local flash = require("flash")
 flash.toggle()
+
+-- replace ; with :
+vim.api.nvim_set_keymap("n", ";", ":", { noremap = true })
