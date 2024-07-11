@@ -17,3 +17,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/gitconfig" "$HO
 
 # lazygit
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/lazy-config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
+
+# zshrc
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/zshrc" "$HOME/.zshrc"
