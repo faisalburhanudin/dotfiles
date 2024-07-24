@@ -39,4 +39,11 @@ return {
 		-- See `:help ibl`
 		main = "ibl",
 	},
+
+	{
+		"stevearc/oil.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = { { "echasnovski/mini.icons", opts = {} } },
+	},
 }

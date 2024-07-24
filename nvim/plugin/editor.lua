@@ -54,3 +54,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = highlight_group,
 	pattern = "*",
 })
+
+local oil = require("oil")
+oil.setup()
+
+-- open current file in oil
+vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>lua require('oil').open()<CR>", { noremap = true, silent = true })
