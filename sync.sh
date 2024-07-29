@@ -14,6 +14,7 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/tmux.conf" "$HO
 
 # gitconfig
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/gitconfig" "$HOME/.gitconfig"
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/gitignore" "$HOME/.gitignore"
 
 # lazygit
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/lazy-config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
