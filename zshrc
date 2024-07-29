@@ -1,3 +1,6 @@
+export LC_ALL=en_IN.UTF-8
+export LANG=en_IN.UTF-8
+
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   if [ -z "$TMUX" ]; then
     exec tmux new-session -A -s workspace

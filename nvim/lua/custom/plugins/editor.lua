@@ -7,6 +7,7 @@ return {
 
 	-- theme
 	"ellisonleao/gruvbox.nvim",
+	"rebelot/kanagawa.nvim",
 
 	-- "gc" to comment visual regions/lines
 	"numToStr/Comment.nvim",
