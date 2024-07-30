@@ -50,7 +50,10 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
-	golangci_lint_ls = {},
+
+	-- Mason distributions is not working
+	-- don't use it
+	-- golangci_lint_ls = {},
 }
 
 local mason_lspconfig = require("mason-lspconfig")
@@ -67,4 +70,20 @@ mason_lspconfig.setup_handlers({
 			filetypes = (servers[server_name] or {}).filetypes,
 		})
 	end,
+})
+
+local lspconfig = require("lspconfig")
+
+lspconfig.golangci_lint_ls.setup({
+	filetypes = { "go", "gomod" },
+	root_dir = lspconfig.util.root_pattern("go.mod"),
+	init_options = {
+		command = {
+			"golangci-lint",
+			"run",
+			"--no-config",
+			"--out-format",
+			"json",
+		},
+	},
 })
