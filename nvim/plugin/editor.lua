@@ -60,3 +60,9 @@ oil.setup()
 
 -- open current file in oil
 vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>lua require('oil').open()<CR>", { noremap = true, silent = true })
+
+-- toggle flash
+vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('flash').toggle()<CR>", { noremap = true, silent = true })
+require("flash").toggle()
+
+require("autoclose").setup()

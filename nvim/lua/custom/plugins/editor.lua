@@ -47,4 +47,8 @@ return {
 		-- Optional dependencies
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	},
+
+	{
+		"m4xshen/autoclose.nvim",
+	},
 }
