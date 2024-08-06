@@ -66,3 +66,11 @@ vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('flash').toggle()<CR
 require("flash").toggle()
 
 require("autoclose").setup()
+
+-- disable flash on csv
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.csv",
+	callback = function()
+		require("flash").toggle(false)
+	end,
+})
