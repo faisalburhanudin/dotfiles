@@ -1,4 +1,5 @@
-*.env
+production
+staging
 *.venv
 venv
 *.idea
