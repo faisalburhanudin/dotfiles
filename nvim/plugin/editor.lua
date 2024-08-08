@@ -65,7 +65,13 @@ vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>lua require('oil').open()<CR>", 
 vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('flash').toggle()<CR>", { noremap = true, silent = true })
 require("flash").toggle()
 
-require("autoclose").setup()
+require("autoclose").setup({
+	options = {
+		disable_when_touch = true,
+		-- currently it only works for begin character, it will be great if it works for end character
+		touch_regex = "%w",
+	},
+})
 
 -- disable flash on csv
 vim.api.nvim_create_autocmd("BufEnter", {
