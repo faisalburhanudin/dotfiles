@@ -80,3 +80,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		require("flash").toggle(false)
 	end,
 })
+
+local debugprint = require("debugprint")
+debugprint.setup()
