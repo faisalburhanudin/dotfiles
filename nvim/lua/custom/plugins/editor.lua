@@ -48,9 +48,9 @@ return {
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	},
 
-	{
-		"m4xshen/autoclose.nvim",
-	},
+	-- {
+	-- 	"m4xshen/autoclose.nvim",
+	-- },
 
 	{
 		"kylechui/nvim-surround",
