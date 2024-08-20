@@ -48,9 +48,15 @@ return {
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	},
 
-	-- {
-	-- 	"m4xshen/autoclose.nvim",
-	-- },
+	{
+		"stevearc/aerial.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 
 	{
 		"kylechui/nvim-surround",

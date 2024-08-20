@@ -72,4 +72,7 @@ cl() {
 }
 
 alias rg='rg --smart-case'
+export PATH=$PATH:~/.rbenv/shims
 
+# Added by `rbenv init` on Mon Aug 19 10:09:30 WIB 2024
+eval "$(rbenv init - --no-rehash zsh)"

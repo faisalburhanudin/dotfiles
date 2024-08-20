@@ -75,6 +75,7 @@ mason_lspconfig.setup_handlers({
 local lspconfig = require("lspconfig")
 
 lspconfig.golangci_lint_ls.setup({
+	capabilities = capabilities,
 	filetypes = { "go", "gomod" },
 	root_dir = lspconfig.util.root_pattern("go.mod"),
 	init_options = {
@@ -86,4 +87,9 @@ lspconfig.golangci_lint_ls.setup({
 			"json",
 		},
 	},
+})
+
+lspconfig.ruby_lsp.setup({
+	capabilities = capabilities,
+	cmd = { "/Users/faisal/.rbenv/shims/ruby-lsp" },
 })
