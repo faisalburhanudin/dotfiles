@@ -20,6 +20,7 @@ vim.defer_fn(function()
 			"vim",
 			"bash",
 			"dart",
+			"ruby",
 		},
 
 		-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
