@@ -85,3 +85,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 local debugprint = require("debugprint")
 debugprint.setup()
+
+-- Command to copy path
+vim.api.nvim_create_user_command("Cppath", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	vim.notify("Copied path to clipboard: " .. path)
+end, {})
