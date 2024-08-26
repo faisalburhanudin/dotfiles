@@ -12,12 +12,29 @@ dap.adapters.delve = {
 	},
 }
 
+local function get_env()
+	local dotenv = vim.fn.getcwd() .. "/.env"
+	local env = {}
+
+	if vim.loop.fs_stat(dotenv) then
+		for line in io.lines(dotenv) do
+			local key, value = line:match("([^=]+)=(.*)")
+			if key ~= nil then
+				env[key] = value
+			end
+		end
+	end
+
+	return env
+end
+
 dap.configurations.go = {
 	{
 		type = "delve",
 		name = "Debug",
 		request = "launch",
 		program = "${file}",
+		env = get_env,
 	},
 }
 
