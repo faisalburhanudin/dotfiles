@@ -1,4 +1,4 @@
-function ExecuteCurrentFile()
+local function execute_file()
 	--  get the current filetype
 	local filetype = vim.bo.filetype
 
@@ -9,33 +9,43 @@ function ExecuteCurrentFile()
 	if filetype == "python" then
 		local venv = os.getenv("VIRTUAL_ENV")
 		if venv then
-			file = venv .. "/bin/python " .. file
+			return venv .. "/bin/python " .. file
 		else
-			file = "python3 " .. file
+			return "python3 " .. file
 		end
-
-		-- execute in term
-		vim.cmd("terminal " .. file)
 	end
 
 	if filetype == "sh" then
-		vim.cmd("terminal bash " .. file)
+		return "bash " .. file
 	end
 
 	if filetype == "go" then
-		vim.cmd("terminal go run " .. file)
+		return "go run " .. file
 	end
+
+	vim.notify("No execution command found for " .. filetype)
 end
 
-function ExecuteXRUN()
+local function execute()
 	vim.cmd("wa")
+
+	local cmd = ""
 
 	local xrun = io.open("xrun.sh", "r")
 	if xrun ~= nil then
-		vim.cmd("terminal bash xrun.sh")
+		cmd = "bash xrun.sh"
 	end
 
-	ExecuteCurrentFile()
+	local rogu_service = io.open("service.yaml", "r")
+	if rogu_service ~= nil then
+		cmd = "rr .env"
+	end
+
+	if cmd == "" then
+		cmd = execute_file()
+	end
+
+	vim.cmd("term " .. cmd)
 end
 
-vim.keymap.set("n", "<leader>xx", ExecuteXRUN, { desc = "E[x]ecute [x]run.sh" })
+vim.keymap.set("n", "<leader>xx", execute, { desc = "E[xx]ecute" })
