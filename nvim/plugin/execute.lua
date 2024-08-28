@@ -14,23 +14,28 @@ function ExecuteCurrentFile()
 			file = "python3 " .. file
 		end
 
-		--  execute the current file
-		vim.cmd("w")
-
 		-- execute in term
 		vim.cmd("terminal " .. file)
 	end
 
 	if filetype == "sh" then
-		vim.cmd("wa")
 		vim.cmd("terminal bash " .. file)
+	end
+
+	if filetype == "go" then
+		vim.cmd("terminal go run " .. file)
 	end
 end
 
 function ExecuteXRUN()
 	vim.cmd("wa")
-	vim.cmd("terminal bash xrun.sh")
+
+	local xrun = io.open("xrun.sh", "r")
+	if xrun ~= nil then
+		vim.cmd("terminal bash xrun.sh")
+	end
+
+	ExecuteCurrentFile()
 end
 
-vim.keymap.set("n", "<leader>xf", ExecuteCurrentFile, { desc = "E[x]ecute [F]ile" })
 vim.keymap.set("n", "<leader>xx", ExecuteXRUN, { desc = "E[x]ecute [x]run.sh" })
