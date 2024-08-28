@@ -78,11 +78,14 @@ lspconfig.golangci_lint_ls.setup({
 	capabilities = capabilities,
 	filetypes = { "go", "gomod" },
 	root_dir = lspconfig.util.root_pattern("go.mod"),
+	debug = true,
 	init_options = {
 		command = {
 			"golangci-lint",
 			"run",
 			"--no-config",
+			"-E",
+			"stylecheck",
 			"--out-format",
 			"json",
 		},
