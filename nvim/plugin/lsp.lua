@@ -6,26 +6,6 @@ local nmap = function(keys, func, desc)
 	vim.keymap.set("n", keys, func, { desc = desc })
 end
 
--- document existing key chains
--- require("which-key").register({
--- 	{ "<leader>c", group = "[C]ode" },
--- 	{ "<leader>c_", hidden = true },
--- 	{ "<leader>d", group = "[D]ocument" },
--- 	{ "<leader>d_", hidden = true },
--- 	{ "<leader>g", group = "[G]it" },
--- 	{ "<leader>g_", hidden = true },
--- 	{ "<leader>h", group = "Git [H]unk" },
--- 	{ "<leader>h_", hidden = true },
--- 	{ "<leader>r", group = "[R]ename" },
--- 	{ "<leader>r_", hidden = true },
--- 	{ "<leader>s", group = "[S]earch" },
--- 	{ "<leader>s_", hidden = true },
--- 	{ "<leader>t", group = "[T]oggle" },
--- 	{ "<leader>t_", hidden = true },
--- 	{ "<leader>w", group = "[W]orkspace" },
--- 	{ "<leader>w_", hidden = true },
--- })
-
 local builtin = require("telescope.builtin")
 local buf = vim.lsp.buf
 
@@ -82,23 +62,23 @@ mason_lspconfig.setup_handlers({
 
 local lspconfig = require("lspconfig")
 
--- lspconfig.golangci_lint_ls.setup({
--- 	capabilities = capabilities,
--- 	filetypes = { "go", "gomod" },
--- 	root_dir = lspconfig.util.root_pattern("go.mod"),
--- 	debug = true,
--- 	init_options = {
--- 		command = {
--- 			"golangci-lint",
--- 			"run",
--- 			"--no-config",
--- 			"-E",
--- 			"stylecheck",
--- 			"--out-format",
--- 			"json",
--- 		},
--- 	},
--- })
+lspconfig.golangci_lint_ls.setup({
+	capabilities = capabilities,
+	filetypes = { "go", "gomod" },
+	root_dir = lspconfig.util.root_pattern("go.mod"),
+	debug = true,
+	init_options = {
+		command = {
+			"golangci-lint",
+			"run",
+			"--no-config",
+			"-E",
+			"stylecheck",
+			"--out-format",
+			"json",
+		},
+	},
+})
 
 lspconfig.ruby_lsp.setup({
 	capabilities = capabilities,
