@@ -100,9 +100,6 @@ vim.api.nvim_set_keymap("n", "<leader>\\", ":vsplit<CR>", { noremap = true, sile
 -- - to split horizontally
 vim.api.nvim_set_keymap("n", "<leader>-", ":split<CR>", { noremap = true, silent = true })
 
--- disable pair
-vim.keymap.set("n", "<leader>dp", require("nvim-autopairs").disable, { desc = "Disable [P]air" })
-
 -- find and Replace
 vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = true, silent = true })
 
