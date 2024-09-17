@@ -1,9 +1,5 @@
-production
-staging
 *.venv
 venv
 *.idea
 .DS_Store
 xrun.sh
-goout
-development.rb
