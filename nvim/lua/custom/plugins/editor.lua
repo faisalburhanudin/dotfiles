@@ -85,4 +85,6 @@ return {
 			},
 		},
 	},
+
+	"echasnovski/mini.ai",
 }
