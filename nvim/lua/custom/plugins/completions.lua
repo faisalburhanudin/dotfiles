@@ -15,9 +15,6 @@ return {
 		},
 	},
 
-	-- AI completions
-	"github/copilot.vim",
-
 	{
 		"L3MON4D3/LuaSnip",
 		-- follow latest release.

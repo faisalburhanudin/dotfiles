@@ -50,7 +50,7 @@ cmp.setup({
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete({}),
 		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
+			behavior = cmp.ConfirmBehavior.insert,
 			select = true,
 		}),
 	}),
@@ -105,22 +105,6 @@ vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = tru
 
 -- save
 vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
-
--- disable copilot
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>cd<CR>",
-	":Copilot disable",
-	{ noremap = true, silent = true, desc = "[C]opilot [D]isable" }
-)
-
--- enable copilot
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>ce<CR>",
-	":Copilot enable",
-	{ noremap = true, silent = true, desc = "[C]opilot [E]nable" }
-)
 
 local util = require("lspconfig.util")
 
