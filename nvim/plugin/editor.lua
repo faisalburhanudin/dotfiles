@@ -48,6 +48,9 @@ vim.o.swapfile = false
 -- make cursorline more visible
 vim.o.cursorline = true
 
+-- avante: recommendation setup
+vim.o.laststatus = 3
+
 -- highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
