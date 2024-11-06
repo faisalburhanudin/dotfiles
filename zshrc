@@ -75,3 +75,10 @@ export PATH=$PATH:~/.rbenv/shims
 
 # Added by `rbenv init` on Mon Aug 19 10:09:30 WIB 2024
 eval "$(rbenv init - --no-rehash zsh)"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="/opt/homebrew/opt/icu4c@76/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c@76/sbin:$PATH"
