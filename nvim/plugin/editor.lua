@@ -45,5 +45,3 @@ vim.api.nvim_create_user_command("Cppath", function()
 	vim.fn.setreg("+", path)
 	vim.notify("Copied path to clipboard: " .. path)
 end, {})
-
-require("mini.ai").setup()
