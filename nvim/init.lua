@@ -28,69 +28,25 @@ require("lazy").setup({
 require("custom.options")
 require("custom.autocmds")
 require("custom.snippets")
-require("custom.configs.editor")
-require("custom.configs.ai")
-require("custom.configs.completion")
-require("custom.configs.editor")
-require("custom.configs.execute")
-require("custom.configs.keymaps")
-require("custom.configs.lsp")
-require("custom.configs.telescope")
-require("custom.configs.treesitter")
 
--- [[ Configure nvim-cmp ]]
--- See `:help cmp`
-local cmp = require("cmp")
-local luasnip = require("luasnip")
--- require("luasnip.loaders.from_vscode").load()
-require("luasnip.loaders.from_lua").load({
-	paths = { vim.fn.stdpath("config") .. "/snippets" },
-})
-luasnip.config.setup({})
+-- load all plugins configs
+local function load_configs()
+	local path = vim.fn.stdpath("config") .. "/lua/custom/configs"
+	local configs = vim.fn.readdir(path)
 
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	completion = {
-		completeopt = "menu,menuone,noinsert",
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<C-p>"] = cmp.mapping.select_prev_item(),
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete({}),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.insert,
-			select = true,
-		}),
-	}),
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "path" },
-	},
-})
+	for _, config in ipairs(configs) do
+		local value = string.match(config, "(.+).lua")
+		if value == nil then
+			goto continue
+		end
 
-require("conform").setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		-- python = { "isort", "black" },
-		javascript = { { "prettierd", "prettier" } },
-		sh = { "shfmt" },
-		go = { "goimports", "gofmt" },
-	},
-})
+		local config_name = "custom.configs." .. value
+		require(config_name)
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
+		::continue::
+	end
+end
+load_configs()
 
 local lspconfig = require("lspconfig")
 
