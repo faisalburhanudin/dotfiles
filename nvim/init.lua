@@ -27,6 +27,16 @@ require("lazy").setup({
 
 require("custom.options")
 require("custom.autocmds")
+require("custom.snippets")
+require("custom.configs.editor")
+require("custom.configs.ai")
+require("custom.configs.completion")
+require("custom.configs.editor")
+require("custom.configs.execute")
+require("custom.configs.keymaps")
+require("custom.configs.lsp")
+require("custom.configs.telescope")
+require("custom.configs.treesitter")
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
