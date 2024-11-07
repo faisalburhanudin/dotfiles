@@ -17,12 +17,8 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure plugins ]]
 require("lazy").setup({
-	{
-		import = "custom.plugins",
-		change_detection = { notify = false },
-	},
+	{ import = "custom.plugins", change_detection = { notify = false } },
 })
 
 require("custom.options")
@@ -31,7 +27,7 @@ require("custom.snippets")
 require("custom.keymaps")
 
 -- load all plugins configs
-local function load_configs()
+local function plugin_configs()
 	local path = vim.fn.stdpath("config") .. "/lua/custom/configs"
 	local configs = vim.fn.readdir(path)
 
@@ -47,4 +43,4 @@ local function load_configs()
 		::continue::
 	end
 end
-load_configs()
+plugin_configs()
