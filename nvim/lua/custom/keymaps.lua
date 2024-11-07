@@ -1,29 +1,29 @@
-local function keymap(mode, lhs, rhs)
-	vim.api.nvim_set_keymap(mode, lhs, rhs, { noremap = true, silent = true })
-end
+local set = vim.keymap.set
 
 -- yank to system clipboard
-keymap("v", "<leader>y", '"+y')
-keymap("n", "<leader>Y", '"+yg_')
+set("v", "<leader>y", '"+y')
+set("n", "<leader>Y", '"+yg_')
 
 -- paste from system clipboard
-keymap("n", "<leader>p", '"+p')
-keymap("n", "<leader>P", '"+P')
+set("n", "<leader>p", '"+p')
+set("n", "<leader>P", '"+P')
 
 -- alternative escape
-keymap("i", "jk", "<esc>")
+set("i", "jk", "<esc>")
 
--- wk to save and quit
-keymap("n", "<leader>wk", ":wq<CR>")
+-- alternative : with ;
+set("n", ";", ":")
 
--- \ to split vertically
-keymap("n", "<leader>\\", ":vsplit<CR>")
-
--- - to split horizontally
-keymap("n", "<leader>-", ":split<CR>")
-
--- find and Replace
-keymap("n", "<leader>fr", ":%s//g<Left><Left>")
-
--- save
-keymap("n", "<leader>w", ":w<CR>")
+-- Telescope
+local builtin = require("telescope.builtin")
+set("n", "<leader><space>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+set("n", "<leader>s/", builtin.current_buffer_fuzzy_find, { desc = "[S]earch [/] in Open Files" })
+set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+set("n", "<leader>gf", builtin.git_files, { desc = "Search [G]it [F]iles" })
+set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+set("n", "<leader>su", builtin.git_status, { desc = "[S]earch [U]nstash" })
