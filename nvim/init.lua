@@ -28,6 +28,7 @@ require("lazy").setup({
 require("custom.options")
 require("custom.autocmds")
 require("custom.snippets")
+require("custom.keymaps")
 
 -- load all plugins configs
 local function load_configs()
@@ -49,32 +50,6 @@ end
 load_configs()
 
 local lspconfig = require("lspconfig")
-
--- yank to system clipboard
-vim.api.nvim_set_keymap("v", "<leader>y", '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>Y", '"+yg_', { noremap = true, silent = true })
-
--- paste from system clipboard
-vim.api.nvim_set_keymap("n", "<leader>p", '"+p', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>P", '"+P', { noremap = true, silent = true })
-
--- jk to escape
-vim.api.nvim_set_keymap("i", "jk", "<esc>", { noremap = true, silent = true })
-
--- wk to save and quit
-vim.api.nvim_set_keymap("n", "<leader>wk", ":wq<CR>", { noremap = true, silent = true })
-
--- \ to split vertically
-vim.api.nvim_set_keymap("n", "<leader>\\", ":vsplit<CR>", { noremap = true, silent = true })
-
--- - to split horizontally
-vim.api.nvim_set_keymap("n", "<leader>-", ":split<CR>", { noremap = true, silent = true })
-
--- find and Replace
-vim.api.nvim_set_keymap("n", "<leader>fr", ":%s//g<Left><Left>", { noremap = true, silent = true })
-
--- save
-vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
 
 local util = require("lspconfig.util")
 
