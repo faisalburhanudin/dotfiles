@@ -25,6 +25,7 @@ require("custom.options")
 require("custom.autocmds")
 require("custom.snippets")
 require("custom.keymaps")
+require("custom.commands")
 
 -- load all plugins configs
 local function plugin_configs()

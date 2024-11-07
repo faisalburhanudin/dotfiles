@@ -5,3 +5,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		require("conform").format({ bufnr = args.buf })
 	end,
 })
+
+-- disable flash on csv file
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.csv",
+	callback = function()
+		require("flash").toggle(false)
+	end,
+})
