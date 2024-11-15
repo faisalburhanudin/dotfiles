@@ -21,6 +21,11 @@ vim.defer_fn(function()
 			"bash",
 			"dart",
 			"ruby",
+			"svelte",
+			"typescript",
+			"javascript",
+			"css",
+			"html",
 		},
 
 		-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
