@@ -97,4 +97,6 @@ return {
 		i(0),
 		t({ "", "}" }),
 	}),
+
+	s("pan", { t('panic("implement me!")') }),
 }
