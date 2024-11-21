@@ -283,7 +283,6 @@ return {
 
 	-- Markdown viewer
 	-- Start the preview :MarkdownPreview
-
 	-- Stop the preview  :MarkdownPreviewStop
 	{
 		"iamcco/markdown-preview.nvim",
@@ -293,5 +292,15 @@ return {
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
+	},
+
+	-- Zen mode
+	{
+		"folke/twilight.nvim",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
 	},
 }
