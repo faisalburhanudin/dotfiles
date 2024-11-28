@@ -27,9 +27,6 @@ require("custom.snippets")
 require("custom.keymaps")
 require("custom.commands")
 
--- per-projects config
-require("custom.projects")
-
 -- load all plugins configs
 local function plugin_configs()
 	local path = vim.fn.stdpath("config") .. "/lua/custom/configs"
