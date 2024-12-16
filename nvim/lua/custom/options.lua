@@ -56,5 +56,4 @@ o.laststatus = 3
 -- using tree sitter as folding
 o.foldmethod = "expr"
 o.foldexpr = "nvim_treesitter#foldexpr()"
-o.foldcolumn = "1"
 o.foldlevel = 5
