@@ -23,7 +23,7 @@ local function get_node_at_err()
 
 	-- TSNode index is start from 0
 	-- Lua index is start from 1
-	-- thats why we need to substract with -2 to get row above
+	-- thats why we need to subtract with -2 to get row above
 	local row = cursor_pos[1] - 2
 	local col = cursor_pos[2]
 
@@ -86,12 +86,12 @@ local function err_handler(_, _, _)
 	local caller = get_caller(err_node)
 	local function_name = get_function_name(err_node)
 
-	local msg = '"error at ' .. caller .. "() when call " .. function_name .. '() error: %w", err'
+	local msg = '"error at ' .. caller .. "() when call " .. function_name .. '() error: %s", err'
 	return "log.Fatalf(" .. msg .. ")"
 end
 
 return {
-	s("ier", {
+	s("iferr", {
 		t({ "if err != nil {", "\t" }),
 		f(err_handler, {}),
 		i(0),
