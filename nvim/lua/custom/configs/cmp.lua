@@ -10,6 +10,8 @@ cmp.setup({
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 	},
+	-- this thing somehow fix problem item selected not in 1 item
+	preselect = "None",
 	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.select_next_item(),
 		["<C-p>"] = cmp.mapping.select_prev_item(),
