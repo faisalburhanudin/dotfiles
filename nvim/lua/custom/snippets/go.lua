@@ -51,7 +51,7 @@ local function get_caller(err_node)
 end
 
 --- @param err_node TSNode
-local function get_function_name(err_node)
+local function get_callee(err_node)
 	local node = err_node
 	while node do
 		if node:type() == "short_var_declaration" then
@@ -77,6 +77,76 @@ local function get_function_name(err_node)
 	end
 end
 
+--- split string by separator
+--- @param value string the string
+--- @param sep string separator
+--- @return table
+local function split(value, sep)
+	local result = {}
+	local pattern = string.format("([^%s]+)", sep)
+	for match in string.gmatch(value, pattern) do
+		table.insert(result, match)
+	end
+	return result
+end
+
+--- get return datatype of function
+--- @param err_node TSNode
+--- @return table
+local function get_function_return(err_node)
+	local node = err_node
+	while node do
+		if node:type() == "function_declaration" then
+			local result = node:field("result")[1]
+			if result == nil then
+				return {}
+			end
+
+			local result_text = get_node_text(result)
+			-- Remove parentheses and any whitespace
+			local result_without_parentheses = result_text:gsub("[%(%)]", "")
+			-- Remove any commas and ensure single spaces between types
+			result_without_parentheses = result_without_parentheses:gsub("%s*,%s*", " ")
+			-- Trim any leading/trailing whitespace
+			result_without_parentheses = result_without_parentheses:gsub("^%s*(.-)%s*$", "%1")
+
+			return split(result_without_parentheses, " ")
+		end
+
+		local parent_node = node:parent()
+		if not parent_node then
+			return {}
+		end
+
+		node = parent_node
+	end
+	return {}
+end
+
+--- get default values of datatype
+--- @param datatypes any
+--- @param error_value string
+--- @return string
+local function get_default_value(datatypes, error_value)
+	local values = {}
+	for _, value in ipairs(datatypes) do
+		if value == "error" then
+			table.insert(values, error_value)
+		elseif value == "int" or value == "int32" or value == "int64" then
+			table.insert(values, "0")
+		elseif value == "string" then
+			table.insert(values, '""')
+		elseif value == "bool" then
+			table.insert(values, "false")
+		elseif value == "float32" or value == "float64" then
+			table.insert(values, "0.0")
+		else
+			table.insert(values, "nil")
+		end
+	end
+	return table.concat(values, ", ")
+end
+
 local function err_handler(_, _, _)
 	local err_node = get_node_at_err()
 	if err_node == nil then
@@ -84,11 +154,28 @@ local function err_handler(_, _, _)
 	end
 
 	local caller = get_caller(err_node)
-	local function_name = get_function_name(err_node)
+	local callee = get_callee(err_node)
+	local returns = get_function_return(err_node)
 
-	local msg = '"error at ' .. caller .. "() when call " .. function_name .. '() error: %s", err'
-	return "log.Fatalf(" .. msg .. ")"
+	local error_message = "error at " .. caller .. " when call " .. callee
+
+	if #returns == 0 then
+		return 'log.Fatalf("' .. error_message .. ', %s", err)'
+	end
+
+	local error_value = 'fmt.Errorf("' .. error_message .. ', %w", err)'
+	if #returns == 1 then
+		return "return " .. error_value
+	end
+
+	local default_values = get_default_value(returns, error_value)
+	return "return " .. default_values
 end
+
+vim.api.nvim_create_user_command("ErrHandler", function()
+	local value = err_handler()
+	vim.inspect(value)
+end, {})
 
 return {
 	s("iferr", {
