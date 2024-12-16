@@ -13,6 +13,7 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
+	typos_lsp = {},
 
 	-- Mason distributions is not working
 	-- don't use it
