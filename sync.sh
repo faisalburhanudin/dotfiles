@@ -21,3 +21,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/lazy-config.yml
 
 # zshrc
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/zshrc" "$HOME/.zshrc"
+
+# typos
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/typos.toml" "$HOME/.config/typos/typos.toml"
