@@ -7,4 +7,9 @@ require("conform").setup({
 		go = { "goimports", "gofmt" },
 		json = { "jq" },
 	},
+	formatters = {
+		black = {
+			prepend_args = { "--line-length", "100" },
+		},
+	},
 })
