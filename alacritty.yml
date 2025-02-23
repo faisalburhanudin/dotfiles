@@ -4,6 +4,14 @@ font:
 
   size: 12
 
+# Improve escape sequence handling
+debug:
+  print_events: false
+  log_level: Off
+  render_timer: false
+
+escape_sequence_parsing: true
+
 # need to map right left keybinding to move between word
 key_bindings:
   - { key: Right, mods: Alt, chars: "\x1BF" }
