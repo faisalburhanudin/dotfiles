@@ -24,19 +24,28 @@ lspconfig.golangci_lint_ls.setup({
 })
 
 -- python
-lspconfig.pyright.setup({})
+lspconfig.pyright.setup({
+	capabilities = capabilities,
+})
 
 -- html
-lspconfig.html.setup({})
+lspconfig.html.setup({
+	capabilities = capabilities,
+})
 
 -- bash
-lspconfig.bashls.setup({})
+lspconfig.bashls.setup({
+	capabilities = capabilities,
+})
 
 -- lua
-lspconfig.lua_ls.setup({})
+lspconfig.lua_ls.setup({
+	capabilities = capabilities,
+})
 
 -- typos
 lspconfig.typos_lsp.setup({
+	capabilities = capabilities,
 	init_options = {
 		config = "~/.config/typos/typos.toml",
 	},
