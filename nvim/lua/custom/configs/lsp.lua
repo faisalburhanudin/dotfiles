@@ -4,7 +4,9 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 local lspconfig = require("lspconfig")
 
 -- golang
-lspconfig.gopls.setup({})
+lspconfig.gopls.setup({
+	capabilities = capabilities,
+})
 
 lspconfig.golangci_lint_ls.setup({
 	capabilities = capabilities,
