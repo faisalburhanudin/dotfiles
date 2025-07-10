@@ -106,12 +106,10 @@
 # ]
 
 cmd + shift - 1 : open "/Applications/Alacritty.app"
-cmd + shift - 2 : open "/Applications/Discord.app"
+cmd + shift - 2 : open "/Applications/Slack.app"
 cmd + shift - 3 : open "/Applications/Zen Browser.app"
-cmd + shift - 4 : goland
-cmd + shift - 5 : open "/Applications/Pritunl.app"
+cmd + shift - 4 : open "/Applications/Google Chrome.app"
 cmd + shift - 6 : open "/Applications/Todoist.app/"
-cmd + shift - 7 : datagrip
 cmd + shift - 8 : open "/Applications/Obsidian.app"
 
 
