@@ -24,3 +24,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/zshrc" "$HOME/.
 
 # typos
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/typos.toml" "$HOME/.config/typos/typos.toml"
+
+# claude commands
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/claude/commands" "$HOME/.claude/commands"
