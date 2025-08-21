@@ -18,3 +18,8 @@ key_bindings:
   - { key: Left,  mods: Alt, chars: "\x1BB" }
   - { key: N, mods: Command, action: CreateNewWindow }
 
+# run bell
+bell:
+  command:
+    program: osascript
+    args: ["-e", "beep"]

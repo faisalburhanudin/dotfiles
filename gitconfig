@@ -1,5 +1,5 @@
 [user]
-    name = faisalburhanudin
+	name = faisal burhanudin
     email = faisalburhanudin@gmail.com
 
 [core]
@@ -15,16 +15,6 @@
 [url "git@github.com:"]
     insteadOf = https://github.com/
 
-[includeIf "gitdir:/Users/faisal/workspace/src/gitlab.com/ruangguru/"]
-    path = /Users/faisal/.gitconfig-ruangguru
-[pull]
-	ff = only
-
-[includeIf "gitdir:/Users/faisal/workspace/src/github.com/ruang-guru/"]
-    path = /Users/faisal/.gitconfig-ruangguru
-[pull]
-	ff = only
-
 [interactive]
     diffFilter = delta --color-only
 
@@ -37,3 +27,8 @@
 
 [diff]
     colorMoved = default
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
