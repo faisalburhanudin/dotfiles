@@ -6,10 +6,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
--- disable flash on csv file
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = "*.csv",
-	callback = function()
-		require("flash").toggle(false)
-	end,
-})
+-- setup python formatting on save for mcp-getgather project
+require("custom.utils").python_format.setup_autocmd()
+

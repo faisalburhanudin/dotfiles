@@ -25,11 +25,13 @@ This script creates symbolic links from the dotfiles to their expected locations
 
 ## Neovim Architecture
 
-The Neovim configuration uses a modular approach:
-- **Plugin Manager**: lazy.nvim with auto-installation
-- **Plugin Loading**: Plugins defined in `lua/custom/plugins.lua`
+The Neovim configuration uses a modular approach with comprehensive documentation:
+- **Plugin Manager**: lazy.nvim with auto-installation and disabled change detection
+- **Plugin Loading**: Categorized plugins defined in `lua/custom/plugins.lua` 
 - **Config Loading**: Automatic loading of all files in `lua/custom/configs/` directory
+- **Utility Modules**: Reusable functions in `lua/custom/utils/` directory
 - **Key Features**: LSP with Mason, Telescope fuzzy finder, Treesitter, Grapple file marking, Oil file manager, blink.cmp completion
+- **Documentation**: Complete configuration documentation available in `nvim/README.md`
 
 ## Common Commands
 
