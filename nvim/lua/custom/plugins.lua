@@ -1,6 +1,9 @@
 return {
 	-- OpenInGH: command to open in github web
-	"almo7aya/openingh.nvim",
+	{
+		"almo7aya/openingh.nvim",
+		cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
+	},
 
 	-- Autocompletion
 	{
@@ -57,21 +60,6 @@ return {
 		opts_extend = { "sources.default" },
 	},
 
-	-- TEMP: disable tried blink.cmp
-	-- {
-	-- 	"hrsh7th/nvim-cmp",
-	-- 	dependencies = {
-	-- 		-- Snippet Engine & its associated nvim-cmp source
-	-- 		"saadparwaiz1/cmp_luasnip",
-	--
-	-- 		-- Adds LSP completion capabilities
-	-- 		"hrsh7th/cmp-nvim-lsp",
-	-- 		"hrsh7th/cmp-path",
-	--
-	-- 		-- Adds a number of user-friendly snippets
-	-- 		"rafamadriz/friendly-snippets",
-	-- 	},
-	-- },
 
 	-- handcrafted snippets
 	{
@@ -80,29 +68,35 @@ return {
 		build = "make install_jsregexp",
 	},
 
-	-- formatter
-	"stevearc/conform.nvim",
 
 	-- git gutter
 	{
 		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 	},
 
 	{
 		"tpope/vim-fugitive",
+		cmd = { "G", "Git", "Gdiffsplit", "Gread", "Gwrite", "Ggrep", "GMove", "GDelete", "GBrowse", "GRemove", "GRename", "Glgrep", "Gedit" },
 	},
 
 	-- Detect tabstop and shiftwidth automatically
 	"tpope/vim-sleuth",
 
 	-- Useful plugin to show you pending keybinds.
-	"folke/which-key.nvim",
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+	},
 
 	-- theme
 	"ellisonleao/gruvbox.nvim",
 
 	-- "gc" to comment visual regions/lines
-	"numToStr/Comment.nvim",
+	{
+		"numToStr/Comment.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+	},
 
 	-- statusline
 	{
@@ -246,13 +240,4 @@ return {
 		ft = { "markdown" },
 	},
 
-	-- Zen mode
-	{
-		"folke/twilight.nvim",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-	},
 }
