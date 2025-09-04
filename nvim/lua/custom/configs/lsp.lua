@@ -45,6 +45,11 @@ lspconfig.lua_ls.setup({
 	capabilities = capabilities,
 })
 
+-- typescript/javascript
+lspconfig.ts_ls.setup({
+	capabilities = capabilities,
+})
+
 -- typos
 lspconfig.typos_lsp.setup({
 	capabilities = capabilities,

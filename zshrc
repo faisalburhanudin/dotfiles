@@ -5,6 +5,8 @@ if [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -48,6 +50,10 @@ source $HOME/.zshrc-rg
 # load rust
 source $HOME/.cargo/env
 
+# direnv
+eval "$(direnv hook zsh)"
+
+
 # load zsh auto autosuggestions
 # should be in the end of config
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -80,5 +86,6 @@ eval "$(rbenv init - --no-rehash zsh)"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
 export PATH="/opt/homebrew/opt/icu4c@76/bin:$PATH"
 export PATH="/opt/homebrew/opt/icu4c@76/sbin:$PATH"
