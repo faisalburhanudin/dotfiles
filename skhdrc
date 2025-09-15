@@ -118,5 +118,5 @@ cmd - n [
 ]
 
 cmd - s [
-		"Alacritty" : tmux display-popup -E 'switch-session'
+		"Alacritty" : tmux display-popup -E '/Users/faisal/workspace/src/github.com/faisalburhanudin/dotfiles/scripts/switch-session'
 ]
