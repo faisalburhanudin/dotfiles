@@ -1,1 +1,1 @@
-require("mason").setup()
+-- Mason is now configured in lsp.lua to ensure proper loading order

@@ -1,3 +1,20 @@
+-- Setup Mason first
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"lua_ls",
+		"gopls",
+		"pyright",
+		"html",
+		"bashls",
+		"ts_ls",
+		"typos_lsp",
+		"ruby_lsp",
+		"golangci_lint_ls",
+	},
+	automatic_installation = true,
+})
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("blink.cmp").get_lsp_capabilities()
 
