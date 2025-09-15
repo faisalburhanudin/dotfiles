@@ -2,7 +2,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(find /Users/faisal/workspace/src/github.com/faisalburhanudin mindepth 1 -maxdepth 1 -type d | fzf --delimiter / --with-nth -1)
+	selected=$(find /Users/faisal/workspace/src/github.com -mindepth 2 -maxdepth 2 -type d | fzf --delimiter / --with-nth -1)
 fi
 
 if [[ -z $selected ]]; then
