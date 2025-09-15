@@ -28,10 +28,11 @@ alias lg='lazygit'
 alias .=source
 alias v="nvim"
 alias ll='ls -ltra'
+alias z=zoxide
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(/opt/homebrew/bin/brew shellenv)"
-# eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
 # eval "$(starship init zsh)"
 
 # google cloud sdk
@@ -71,7 +72,7 @@ cl() {
 }
 
 alias rg='rg --smart-case'
-export PATH=$PATH:~/.rbenv/shims
+# export PATH=$PATH:~/.rbenv/shims
 
 # Added by `rbenv init` on Mon Aug 19 10:09:30 WIB 2024
 # eval "$(rbenv init - --no-rehash zsh)"
@@ -89,3 +90,6 @@ if [ -f '/Users/faisal/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/faisal/g
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/faisal/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/faisal/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add custom scripts
+export PATH="/Users/faisal/workspace/src/github.com/faisalburhanudin/dotfiles/scripts:$PATH"

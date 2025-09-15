@@ -114,7 +114,7 @@ cmd + shift - 8 : open "/Applications/Obsidian.app"
 
 
 cmd - n [
-		"Alacritty" : tmux display-popup -E 'new-session'
+		"Alacritty" : tmux display-popup -E '/Users/faisal/workspace/src/github.com/faisalburhanudin/dotfiles/scripts/new-session'
 ]
 
 cmd - s [
