@@ -24,28 +24,22 @@ bindkey '^b' edit-command-line
 
 export EDITOR=nvim
 
-alias z=zoxide
 alias lg='lazygit'
 alias .=source
 alias v="nvim"
 alias ll='ls -ltra'
-alias g='goland .'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
 # eval "$(starship init zsh)"
-eval "$(navi widget zsh)"
 
 # google cloud sdk
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+# source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # java config
 export GROOVY_HOME=/opt/homebrew/opt/groovy/libexec
-
-# load zshrc rg
-source $HOME/.zshrc-rg
 
 # load rust
 source $HOME/.cargo/env
@@ -56,7 +50,7 @@ eval "$(direnv hook zsh)"
 
 # load zsh auto autosuggestions
 # should be in the end of config
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # load atuin
 eval "$(atuin init zsh --disable-up-arrow)"
@@ -80,12 +74,18 @@ alias rg='rg --smart-case'
 export PATH=$PATH:~/.rbenv/shims
 
 # Added by `rbenv init` on Mon Aug 19 10:09:30 WIB 2024
-eval "$(rbenv init - --no-rehash zsh)"
+# eval "$(rbenv init - --no-rehash zsh)"
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 export PATH="/opt/homebrew/opt/icu4c@76/bin:$PATH"
 export PATH="/opt/homebrew/opt/icu4c@76/sbin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/faisal/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/faisal/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/faisal/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/faisal/google-cloud-sdk/completion.zsh.inc'; fi
