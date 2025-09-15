@@ -9,7 +9,7 @@ require("mason-lspconfig").setup({
 		"bashls",
 		"ts_ls",
 		"typos_lsp",
-		"ruby_lsp",
+		-- "ruby_lsp",
 		"golangci_lint_ls",
 	},
 	automatic_installation = true,
