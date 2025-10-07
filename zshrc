@@ -93,3 +93,6 @@ if [ -f '/Users/faisal/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/fa
 
 # Add custom scripts
 export PATH="/Users/faisal/workspace/src/github.com/faisalburhanudin/dotfiles/scripts:$PATH"
+
+# opencode
+export PATH=/Users/faisal/.opencode/bin:$PATH

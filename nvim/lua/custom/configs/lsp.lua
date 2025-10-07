@@ -15,6 +15,16 @@ require("mason-lspconfig").setup({
 	automatic_installation = true,
 })
 
+-- Setup Mason tool installer for formatters
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"prettierd",
+		"prettier",
+		"stylua",
+		"ruff",
+	},
+})
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("blink.cmp").get_lsp_capabilities()
 
