@@ -75,6 +75,8 @@ lspconfig.lua_ls.setup({
 -- typescript/javascript
 lspconfig.ts_ls.setup({
 	capabilities = capabilities,
+	root_dir = lspconfig.util.root_pattern("pnpm-workspace.yaml", "pnpm-lock.yaml", ".git"),
+	single_file_support = false,
 })
 
 -- typos

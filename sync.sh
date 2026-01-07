@@ -27,3 +27,6 @@ ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/typos.toml" "$H
 
 # claude commands
 ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/claude/commands" "$HOME/.claude/commands"
+
+# opencode agent
+ln -sf "$HOME/workspace/src/github.com/faisalburhanudin/dotfiles/opencode" "$HOME/.config/opencode"

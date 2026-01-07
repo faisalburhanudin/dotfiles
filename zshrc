@@ -1,7 +1,7 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-if [ -z "$TMUX" ]; then
+if [[ -o interactive ]] && [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
 
@@ -27,8 +27,10 @@ export EDITOR=nvim
 alias lg='lazygit'
 alias .=source
 alias v="nvim"
+alias docker=podman
 alias ll='ls -ltra'
 alias z=zoxide
+alias oc=opencode
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -96,3 +98,14 @@ export PATH="/Users/faisal/workspace/src/github.com/faisalburhanudin/dotfiles/sc
 
 # opencode
 export PATH=/Users/faisal/.opencode/bin:$PATH
+
+# Go binary
+export PATH=$PATH:/Users/faisal/go/bin
+
+# pnpm
+export PNPM_HOME="/Users/faisal/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

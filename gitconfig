@@ -1,6 +1,6 @@
 [user]
 	name = faisal burhanudin
-    email = faisalburhanudin@gmail.com
+	email = faisalburhanudin@gmail.com
 
 [core]
 	excludesfile = /Users/faisal/.gitignore
